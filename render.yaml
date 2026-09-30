@@ -1,35 +1,13 @@
 services:
-  # 1) خدمة الويب (Flask)
   - type: web
-    name: abdouu-vip-hosting-web
+    name: abdouu-vip-hosting
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
     envVars:
-      - key: OWNER_ID
-        sync: false
       - key: SECRET_KEY
         generateValue: true
-      - key: PYTHON_VERSION
-        value: "3.11.0"
-    disk:
-      name: panel-data
-      mountPath: /opt/render/project/src/panel_data
-      sizeGB: 1
-
-  # 2) خدمة تشغيل البوت (Background Worker)
-  - type: worker
-    name: abdouu-vip-hosting-bot
-    runtime: python
-    plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: python bot_runner.py
-    envVars:
-      - key: BOT_TOKEN
-        sync: false
-      - key: OWNER_ID
-        sync: false
       - key: PYTHON_VERSION
         value: "3.11.0"
     disk:
